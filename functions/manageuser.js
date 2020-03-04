@@ -15,16 +15,17 @@ const createuser = (req,res) => {
     }
     admin.auth().createUser(password).then((ref) => {
         var personnel = {
+            personnel_id: req.body.id,
             personnel_email: req.body.email,
             personnel_fullname:{
                 personnel_firstname: req.body.firstname,
-                personnel_lastname: req.body.lastname
+                personnel_lastname: req.body.lastname,
+                personnel_prefix: req.body.prefix
             },
             personnel_tel: req.body.phonenumber,
             position_id: req.body.positionid,
-            uid: ref.uid
         }
-        admin.firestore().collection('personnel').doc(req.body.id).set(personnel).then((ref =>{
+        admin.firestore().collection('personnel').doc(ref.uid).set(personnel).then((ref =>{
             console.log(ref)
             res.status(200).json({ref})
         })).catch((error) => {
