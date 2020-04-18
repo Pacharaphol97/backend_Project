@@ -45,9 +45,9 @@ const getHenchman = (req,res) => {
             })
         }
         i = 0
-        dataHenchman = {}
+        dataHenchman = {data:[]}
         getHenchman.forEach(doc => {
-            dataHenchman[i] = {
+            dataHenchman.data[i] = {
                 uid:doc.id,
                 personnel:doc.data()
             }
