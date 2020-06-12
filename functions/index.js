@@ -4,7 +4,7 @@ const cors = require("cors")({ origin: true });
 
 const authorization = require('./authorization')
 const personnel = require('./personnel')
-const manageuser = require('./manageuser')
+const manageuser = require('./managepersonnel')
 const manageposition = require('./manageposition')
 const managetimestamp = require('./managetimestamp')
 const manageleave = require('./manageleave')
@@ -82,6 +82,24 @@ exports.createSchedule = functions.https.onRequest((req,res) => {
 })
 
 //ส่วนฝ่ายบุคคล
+exports.getallPersonnel = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        manageuser.getallPersonnel(req,res)
+    })
+})
+exports.createPersonnel = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        manageuser.createPersonnel(req,res)
+    })
+})
+exports.editPersonnel = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        manageuser.editPersonnel(req,res)
+    })
+})
 exports.createPublicRelations = functions.https.onRequest((req,res) => {
     cors(req,res,() => {
         res.setHeader('Access-Control-Allow-Origin', '*')
@@ -90,17 +108,27 @@ exports.createPublicRelations = functions.https.onRequest((req,res) => {
 })
 
 //ส่วนการจัดการผู้ใช้งาน
-exports.createuser = functions.https.onRequest((req,res) => {manageuser.createuser(req,res)})
-exports.edituser = functions.https.onRequest((req,res) => {manageuser.edituser(req,res)})
 exports.checkusertoken = functions.https.onRequest((req,res) => {manageuser.checkusertoken(req,res)})
 
 //ส่วนจัดการตำแหน่งพนักงาน
 exports.createposition = functions.https.onRequest((req,res) => {manageposition.createposition(req,res)})
 
 //ส่วนจัดการเวลาเข้างาน-ออกงาน
+exports.gettimestamp = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        managetimestamp.gettimestamp(req,res)
+    })
+})
 exports.timestamp = functions.https.onRequest((req,res) => {
     cors(req,res,() => {
         res.setHeader('Access-Control-Allow-Origin', '*')
         managetimestamp.timestamp(req,res)
+    })
+})
+exports.edittimestamp = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        managetimestamp.editTimestamp(req,res)
     })
 })
