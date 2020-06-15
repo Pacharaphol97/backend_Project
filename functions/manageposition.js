@@ -19,6 +19,22 @@ const createposition = (req,res) => {
     })
 }
 
+const positiontransfer = (req,res) => {
+    if(req.method !== 'POST'){
+        return res.status(500).json({
+            message: 'Not allowed'
+        })
+    }
+    var uid = req.body.uid
+    var data = {
+        position_id:req.body.positionid
+    }
+    admin.firestore().collection('personnel').doc(uid).update(data).then(positiontransfer => {
+        res.send(positiontransfer)
+    })
+}
+
 module.exports = {
-    createposition
+    createposition,
+    positiontransfer
 }

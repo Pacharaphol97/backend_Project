@@ -106,12 +106,12 @@ exports.createPublicRelations = functions.https.onRequest((req,res) => {
         managepublicrelations.createPublicRelations(req,res)
     })
 })
-
-//ส่วนการจัดการผู้ใช้งาน
-exports.checkusertoken = functions.https.onRequest((req,res) => {manageuser.checkusertoken(req,res)})
-
-//ส่วนจัดการตำแหน่งพนักงาน
-exports.createposition = functions.https.onRequest((req,res) => {manageposition.createposition(req,res)})
+exports.positionTransfer = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        manageposition.positiontransfer(req,res)
+    })
+})
 
 //ส่วนจัดการเวลาเข้างาน-ออกงาน
 exports.gettimestamp = functions.https.onRequest((req,res) => {
@@ -132,3 +132,9 @@ exports.edittimestamp = functions.https.onRequest((req,res) => {
         managetimestamp.editTimestamp(req,res)
     })
 })
+
+//ส่วนการจัดการผู้ใช้งาน
+// exports.checkusertoken = functions.https.onRequest((req,res) => {manageuser.checkusertoken(req,res)})
+
+//ส่วนจัดการตำแหน่งพนักงาน
+// exports.createposition = functions.https.onRequest((req,res) => {manageposition.createposition(req,res)})
