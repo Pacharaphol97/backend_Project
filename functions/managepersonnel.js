@@ -55,6 +55,7 @@ const createPersonnel = (req,res) => {
                     },
                     personnel_tel: req.body.phonenumber,
                     position_id: req.body.positionid,
+                    leader_uid:req.body.leaderuid
                 }
                 admin.firestore().collection('personnel').doc(ref.uid).set(personnel).then((ref =>{
                     console.log(ref)
@@ -100,6 +101,22 @@ const editPersonnel = (req,res) => {
     })
 }
 
+//ย้ายสังกัดพนักงาน
+const teamtransfer = (req,res) => {
+    if(req.method !== 'POST'){
+        return res.status(500).json({
+            message: 'Not allowed'
+        })
+    }
+    var uid = req.body.uid
+    var data = {
+        leader_uid:req.body.leaderuid
+    }
+    admin.firestore().collection('personnel').doc(uid).update(data).then(teamtransfer => {
+        res.send(teamtransfer)
+    })
+}
+
 //ปิดการเข้าสู่ระบบของผู้ใช้งาน (ผู้ดูแลระบบ)
 const disableduser = (req,res) => {
 
@@ -129,6 +146,7 @@ module.exports = {
     getallPersonnel,
     createPersonnel,
     editPersonnel,
+    teamtransfer,
     disableduser,
     checkusertoken
 }

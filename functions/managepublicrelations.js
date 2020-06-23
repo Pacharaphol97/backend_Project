@@ -37,7 +37,24 @@ const createPublicRelations = (req,res) => {
     })
 }
 
+const editPublicRelations = (req,res) => {
+    if(req.method !== 'POST'){
+        return res.status(405).json({
+            error:'Method Required',
+            message: 'Method Not Allowed'
+        })
+    }
+    var data = {
+        publicrelations_topic:req.body.topic,
+        publicrelations_detail:req.body.detail,
+    }
+    admin.firestore().collection('public_relations').doc(req.body.uid).update(data).then(editPublicRelations => {
+        res.send(editPublicRelations)
+    })
+}
+
 module.exports = {
     getPublicRelations,
-    createPublicRelations
+    createPublicRelations,
+    editPublicRelations
 }

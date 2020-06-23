@@ -106,10 +106,22 @@ exports.createPublicRelations = functions.https.onRequest((req,res) => {
         managepublicrelations.createPublicRelations(req,res)
     })
 })
+exports.editPublicRelations = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        managepublicrelations.editPublicRelations(req,res)
+    })
+})
 exports.positionTransfer = functions.https.onRequest((req,res) => {
     cors(req,res,() => {
         res.setHeader('Access-Control-Allow-Origin', '*')
         manageposition.positiontransfer(req,res)
+    })
+})
+exports.teamTransfer = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        manageuser.teamtransfer(req,res)
     })
 })
 
