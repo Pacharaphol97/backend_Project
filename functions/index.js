@@ -80,6 +80,18 @@ exports.createSchedule = functions.https.onRequest((req,res) => {
         manageschedule.createSchedule(req,res)
     })
 })
+exports.editSchedule = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        manageschedule.editSchedule(req,res)
+    })
+})
+exports.deleteSchedule = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        manageschedule.deleteSchedule(req,res)
+    })
+})
 
 //ส่วนฝ่ายบุคคล
 exports.getallPersonnel = functions.https.onRequest((req,res) => {
@@ -98,6 +110,12 @@ exports.editPersonnel = functions.https.onRequest((req,res) => {
     cors(req,res,() => {
         res.setHeader('Access-Control-Allow-Origin', '*')
         manageuser.editPersonnel(req,res)
+    })
+})
+exports.deletePersonnel = functions.https.onRequest((req,res) => {
+    cors(req,res,() => {
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        manageuser.deletePersonnel(req,res)
     })
 })
 exports.createPublicRelations = functions.https.onRequest((req,res) => {

@@ -118,8 +118,25 @@ const teamtransfer = (req,res) => {
 }
 
 //ปิดการเข้าสู่ระบบของผู้ใช้งาน (ผู้ดูแลระบบ)
-const disableduser = (req,res) => {
-
+const deletePersonnel = (req,res) => {
+    if(req.method !== 'POST'){
+        return res.status(500).json({
+            message: 'Not allowed'
+        })
+    }
+    var uid = req.body.uid
+    admin.firestore().collection('personnel').doc(uid).delete().then(async deletePersonnel => {
+        admin.auth().deleteUser(uid);
+        let personnel = await admin.firestore().collection('personnel').get()
+        personnel.forEach(async doc => {
+            let Personnel = doc.data()
+            if(uid == Personnel.leader_uid){
+                await admin.firestore().collection('personnel').doc(doc.id).update({leader_uid:""})
+            }
+        })
+        res.send(deletePersonnel)
+    })
+    
 }
 
 //เช็คโทเคนผู้ใช้งาน
@@ -147,6 +164,6 @@ module.exports = {
     createPersonnel,
     editPersonnel,
     teamtransfer,
-    disableduser,
+    deletePersonnel,
     checkusertoken
 }

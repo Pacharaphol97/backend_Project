@@ -45,10 +45,31 @@ const editSchedule = (req,res) => {
             message: 'Method Not Allowed'
         })
     }
-    
+    var body = {
+        schedule_topic:req.body.topic,
+        schedule_detail:req.body.detail,
+        scheduledetermine_date:admin.firestore.Timestamp.fromDate(new Date(req.body.determine_date)),
+    }
+    admin.firestore().collection('schedule').doc(req.body.uid).update(body).then(editSchedule => {
+        res.send(editSchedule)
+    })
+}
+
+const deleteSchedule = (req,res) => {
+    if(req.method !== 'POST'){
+        return res.status(405).json({
+            error:'Method Required',
+            message: 'Method Not Allowed'
+        })
+    }
+    admin.firestore().collection('schedule').doc(req.body.uid).delete().then(deleteSchedule =>{
+        res.send(deleteSchedule)
+    })
 }
 
 module.exports = {
     getSchedule,
-    createSchedule
+    createSchedule,
+    editSchedule,
+    deleteSchedule
 }
